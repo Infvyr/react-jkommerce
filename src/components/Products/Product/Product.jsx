@@ -25,18 +25,20 @@ const Product = ({ product, onAddToCart }) => {
 			/>
 			<CardContent>
 				<div className={classes.cardContent}>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant="subtitle2" gutterBottom>
 						{product.name}
 					</Typography>
-					<Typography variant="h5">
-						{product.price.formatted_with_code}
+					<Typography variant="subtitle2">
+						{product.price.formatted_with_symbol}
 					</Typography>
 				</div>
 			</CardContent>
 			<CardContent className={classes.categories}>
 				{product.categories.map((category) => (
 					<ButtonGroup key={category.id} size="small">
-						<Button variant="text">{category.name}</Button>
+						<Button variant="text" style={{ textTransform: 'initial' }}>
+							{category.name}
+						</Button>
 					</ButtonGroup>
 				))}
 			</CardContent>
