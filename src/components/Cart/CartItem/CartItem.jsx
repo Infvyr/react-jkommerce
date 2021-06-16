@@ -9,7 +9,7 @@ import {
 
 import useStyles from './styles';
 
-const CartItem = ({ item }) => {
+const CartItem = ({ item, onUpdateCartQty, onRemoveFromCart }) => {
 	const classes = useStyles();
 
 	return (
@@ -26,11 +26,19 @@ const CartItem = ({ item }) => {
 			</CardContent>
 			<CardActions className={classes.cartActions}>
 				<div className={classes.buttons}>
-					<Button type="button" size="small" color="secondary">
+					<Button
+						type="button"
+						size="small"
+						color="secondary"
+						onClick={() => onUpdateCartQty(item.id, item.quantity - 1)}>
 						-
 					</Button>
 					<Typography className={classes.quantity}>{item.quantity}</Typography>
-					<Button type="button" size="small" color="primary">
+					<Button
+						type="button"
+						size="small"
+						color="primary"
+						onClick={() => onUpdateCartQty(item.id, item.quantity + 1)}>
 						+
 					</Button>
 				</div>
@@ -38,7 +46,8 @@ const CartItem = ({ item }) => {
 					type="button"
 					size="small"
 					variant="contained"
-					color="secondary">
+					color="secondary"
+					onClick={() => onRemoveFromCart(item.id)}>
 					Remove
 				</Button>
 			</CardActions>
