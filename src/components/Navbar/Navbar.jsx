@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import {
 	AppBar,
@@ -13,13 +14,44 @@ import { ShoppingCart } from '@material-ui/icons';
 import logo from '../../assets/commerce.png';
 import useStyles from './styles';
 
-const Navbar = ({ totalCartItems }) => {
-	const classes = useStyles();
+const Navbar = ({ totalItems }) => {
+	const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState(null);
 	const location = useLocation();
+	const classes = useStyles();
+
+	const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+
+	const handleMobileMenuClose = () => setMobileMoreAnchorEl(null);
+
+	const mobileMenuId = 'primary-search-account-menu-mobile';
+
+	const renderMobileMenu = (
+		<Menu
+			anchorEl={mobileMoreAnchorEl}
+			anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+			id={mobileMenuId}
+			keepMounted
+			transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+			open={isMobileMenuOpen}
+			onClose={handleMobileMenuClose}>
+			<MenuItem>
+				<IconButton
+					component={Link}
+					to="/cart"
+					aria-label="Show cart items"
+					color="inherit">
+					<Badge badgeContent={totalItems} color="secondary">
+						<ShoppingCart />
+					</Badge>
+				</IconButton>
+				<p>Cart</p>
+			</MenuItem>
+		</Menu>
+	);
 
 	return (
 		<>
-			<AppBar position="fixed" color="inherit" className={classes.appBar}>
+			<AppBar position="fixed" className={classes.appBar} color="inherit">
 				<Toolbar>
 					<Typography
 						component={Link}
@@ -29,10 +61,10 @@ const Navbar = ({ totalCartItems }) => {
 						color="inherit">
 						<img
 							src={logo}
-							alt="JKommerce"
+							alt="commerce.js"
 							height="25px"
 							className={classes.image}
-						/>
+						/>{' '}
 						JKommerce
 					</Typography>
 					<div className={classes.grow} />
@@ -43,7 +75,7 @@ const Navbar = ({ totalCartItems }) => {
 								to="/cart"
 								aria-label="Show cart items"
 								color="inherit">
-								<Badge badgeContent={totalCartItems} color="secondary">
+								<Badge badgeContent={totalItems} color="secondary">
 									<ShoppingCart />
 								</Badge>
 							</IconButton>
@@ -51,6 +83,7 @@ const Navbar = ({ totalCartItems }) => {
 					)}
 				</Toolbar>
 			</AppBar>
+			{renderMobileMenu}
 		</>
 	);
 };

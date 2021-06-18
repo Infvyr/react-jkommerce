@@ -11,7 +11,13 @@ function FormInput({ name, label }) {
 				control={control}
 				name={name}
 				render={({ field }) => (
-					<TextField fullWidth label={label} required error={isError} />
+					<TextField
+						defaultValue=""
+						fullWidth
+						label={label}
+						required
+						error={isError}
+					/>
 				)}
 			/>
 		</Grid>
